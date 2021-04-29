@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @EnableAutoConfiguration
 public class UserManagementController {
 	
+	@CrossOrigin
 	@RequestMapping(value="/get-all",  produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<User> getAllUsers() {
@@ -22,24 +24,24 @@ public class UserManagementController {
 		return users;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/get/{userId}",  method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public User getUser(@PathVariable int userId) {
-		System.out.println(userId);
 		User u = HandleRequests.getUser(userId);
 		return u;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/delete/{userId}",  method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<User> deleteUser(@PathVariable int userId) {
-		System.out.println(userId);
 		HandleRequests.deleteUser(userId);
 		List<User> users = HandleRequests.getAllUsers();
 		return users;
 	}
 	
-	
+	@CrossOrigin
 	@RequestMapping(value="/insert", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public User insertUser(@RequestBody User user) {
@@ -47,6 +49,7 @@ public class UserManagementController {
 		return u;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/update/{userId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public User updateUser(@PathVariable int userId, @RequestBody User user) {
