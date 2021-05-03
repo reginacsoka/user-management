@@ -10,8 +10,8 @@ class Nav extends Component {
           <Link to="/">
             <li>List</li>
           </Link>
-          <Link to="/shop">
-            <li>Nav - Shop</li>
+          <Link to="/add">
+            <li>Add user</li>
           </Link>
         </ul>
       </nav>

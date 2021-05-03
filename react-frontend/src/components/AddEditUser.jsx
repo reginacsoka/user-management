@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-class EditUser extends Component {
+class AddEditUser extends Component {
   state = {
     user: {
       id: "",
@@ -14,15 +14,17 @@ class EditUser extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get("http://127.0.0.1:8080/get/" + this.props.match.params.id)
-      .then((response) => {
-        const user = response.data;
-        this.setState({ user });
-      })
-      .catch((error) => {
-        console.log("Error in the get user", error);
-      });
+    if (this.props.match.params.id) {
+      axios
+        .get("http://127.0.0.1:8080/get/" + this.props.match.params.id)
+        .then((response) => {
+          const user = response.data;
+          this.setState({ user });
+        })
+        .catch((error) => {
+          console.log("Error in the get user", error);
+        });
+    }
   }
 
   handleChangeName = (evt) => {
@@ -58,11 +60,55 @@ class EditUser extends Component {
         this.state.user
       )
       .then((response) => {
-        const user = response.data;
+        //const user = response.data;
       })
       .catch((error) => {
         console.log("Error in post", error);
       });
+  };
+
+  handleCreate = () => {
+    axios
+      .post("http://127.0.0.1:8080/insert", this.state.user)
+      .then((response) => {
+        //const user = response.data;
+      })
+      .catch((error) => {
+        console.log("Error in post", error);
+      });
+  };
+
+  handleSave = () => {
+    if (this.props.match.params.id) {
+      axios
+        .post(
+          "http://127.0.0.1:8080/update/" + this.props.match.params.id,
+          this.state.user
+        )
+        .then((response) => {
+          //const user = response.data;
+        })
+        .catch((error) => {
+          console.log("Error in post", error);
+        });
+    } else {
+      axios
+        .post("http://127.0.0.1:8080/insert", this.state.user)
+        .then((response) => {
+          //const user = response.data;
+        })
+        .catch((error) => {
+          console.log("Error in post", error);
+        });
+    }
+  };
+
+  getSubmitButton = () => {
+    if (this.props.match.params.id) {
+      return <button onClick={this.handleUpdate}>Update</button>;
+    } else {
+      return <button onClick={this.handleCreate}>Add new user</button>;
+    }
   };
 
   render() {
@@ -106,7 +152,8 @@ class EditUser extends Component {
         />
         <br />
 
-        <button onClick={this.handleUpdate}>Update</button>
+        {this.getSubmitButton()}
+
         <Link to="/">
           <button> Back </button>
         </Link>
@@ -115,4 +162,4 @@ class EditUser extends Component {
   }
 }
 
-export default EditUser;
+export default AddEditUser;

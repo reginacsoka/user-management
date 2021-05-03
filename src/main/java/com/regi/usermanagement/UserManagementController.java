@@ -35,10 +35,8 @@ public class UserManagementController {
 	@CrossOrigin
 	@RequestMapping(value="/delete/{userId}",  method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<User> deleteUser(@PathVariable int userId) {
+	public void deleteUser(@PathVariable int userId) {
 		HandleRequests.deleteUser(userId);
-		List<User> users = HandleRequests.getAllUsers();
-		return users;
 	}
 	
 	@CrossOrigin

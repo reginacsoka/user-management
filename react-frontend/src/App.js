@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import Users from "./components/Users";
 import "./App.css";
 import Nav from "./Nav";
-import EditUser from "./components/EditUser";
-import Shop from "./Shop";
+import AddEditUser from "./components/AddEditUser";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -19,8 +18,8 @@ class App extends Component {
           <Nav />
           <Switch>
             <Route path="/" exact component={Users} />
-            <Route path="/edit/:id" component={EditUser} />
-            <Route path="/shop" component={Shop} />
+            <Route path="/edit/:id" component={AddEditUser} />
+            <Route path="/add" component={AddEditUser} />
           </Switch>
         </div>
       </Router>

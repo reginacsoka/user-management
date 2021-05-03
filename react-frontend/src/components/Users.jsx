@@ -8,6 +8,10 @@ class Users extends Component {
   };
 
   componentDidMount() {
+    this.loadUsers();
+  }
+
+  loadUsers = () => {
     axios
       .get("http://127.0.0.1:8080/get-all")
       .then((response) => {
@@ -17,14 +21,14 @@ class Users extends Component {
       .catch((error) => {
         console.log("Error in the get all", error);
       });
-  }
+  };
 
   render() {
     return (
       <div>
         <ul>
           {this.state.users.map((user) => (
-            <User key={user.id} user={user} />
+            <User key={user.id} user={user} onDeleteCallThis={this.loadUsers} />
           ))}
         </ul>
       </div>
