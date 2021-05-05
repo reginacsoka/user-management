@@ -25,7 +25,7 @@ class Users extends Component {
       <div>
         <ul>
           {this.state.users.map((user) => (
-            <User key={user.id} user={user} onDeleteCallThis={this.loadUsers} />
+            <User key={user.id} user={user} onDelete={this.loadUsers} />
           ))}
         </ul>
       </div>

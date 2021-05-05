@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { apiCalls } from "../utils/apiCalls";
 
 class User extends Component {
   handleDelete = () => {
-    axios
-      .delete(
-        "http://127.0.0.1:8080/delete/" + this.props.user.id,
-        this.props.user
-      )
-      .then(() => {
-        this.props.onDeleteCallThis();
-      })
-      .catch((error) => {
-        console.log("Error in post", error);
-      });
+    apiCalls.deleteUser(this.props.user.id).then((resp) => {
+      this.props.onDelete();
+    });
   };
 
   render() {

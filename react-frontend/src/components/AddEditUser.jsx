@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { apiCalls } from "../utils/apiCalls";
 
 class AddEditUser extends Component {
   state = {
@@ -15,15 +15,9 @@ class AddEditUser extends Component {
 
   componentDidMount() {
     if (this.props.match.params.id) {
-      axios
-        .get("http://127.0.0.1:8080/get/" + this.props.match.params.id)
-        .then((response) => {
-          const user = response.data;
-          this.setState({ user });
-        })
-        .catch((error) => {
-          console.log("Error in the get user", error);
-        });
+      apiCalls.getUser(this.props.match.params.id).then((response) => {
+        this.setState({ user: response });
+      });
     }
   }
 
@@ -54,60 +48,20 @@ class AddEditUser extends Component {
   };
 
   handleUpdate = () => {
-    axios
-      .post(
-        "http://127.0.0.1:8080/update/" + this.props.match.params.id,
-        this.state.user
-      )
-      .then((response) => {
-        //const user = response.data;
-      })
-      .catch((error) => {
-        console.log("Error in post", error);
-      });
+    apiCalls
+      .updateUser(this.state.user.id, this.state.user)
+      .then((response) => {});
   };
 
-  handleCreate = () => {
-    axios
-      .post("http://127.0.0.1:8080/insert", this.state.user)
-      .then((response) => {
-        //const user = response.data;
-      })
-      .catch((error) => {
-        console.log("Error in post", error);
-      });
-  };
-
-  handleSave = () => {
-    if (this.props.match.params.id) {
-      axios
-        .post(
-          "http://127.0.0.1:8080/update/" + this.props.match.params.id,
-          this.state.user
-        )
-        .then((response) => {
-          //const user = response.data;
-        })
-        .catch((error) => {
-          console.log("Error in post", error);
-        });
-    } else {
-      axios
-        .post("http://127.0.0.1:8080/insert", this.state.user)
-        .then((response) => {
-          //const user = response.data;
-        })
-        .catch((error) => {
-          console.log("Error in post", error);
-        });
-    }
+  handleInsert = () => {
+    apiCalls.insertUser(this.state.user).then((response) => {});
   };
 
   getSubmitButton = () => {
     if (this.props.match.params.id) {
       return <button onClick={this.handleUpdate}>Update</button>;
     } else {
-      return <button onClick={this.handleCreate}>Add new user</button>;
+      return <button onClick={this.handleInsert}>Add new user</button>;
     }
   };
 

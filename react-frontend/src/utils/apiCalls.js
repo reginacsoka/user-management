@@ -15,10 +15,41 @@ export const apiCalls = {
   },
 
   getUser: (id) => {
-    return {};
+    return axios
+      .get(BASE_URL + "/get/" + id)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("Error in the get user", error);
+      });
   },
 
-  insertUser: (payload) => {},
+  insertUser: (payload) => {
+    return axios
+      .post(BASE_URL + "/insert", payload)
+      .then((response) => {
+        //const user = response.data;
+      })
+      .catch((error) => {
+        console.log("Error in post", error);
+      });
+  },
 
-  deleteUser: (id) => {},
+  updateUser: (id, payload) => {
+    return axios
+      .post(BASE_URL + "/update/" + id, payload)
+      .then((response) => {
+        //const user = response.data;
+      })
+      .catch((error) => {
+        console.log("Error in post", error);
+      });
+  },
+
+  deleteUser: (id) => {
+    return axios.delete(BASE_URL + "/delete/" + id).catch((error) => {
+      console.log("Error in post", error);
+    });
+  },
 };
