@@ -18,10 +18,15 @@ class User extends Component {
         <p> Username: {this.props.user.username}</p>
 
         <Link to={"/edit/" + this.props.user.id}>
-          <button>Edit</button>
+          <button className="btn btn-outline-success mx-2">Edit</button>
         </Link>
 
-        <button onClick={this.handleDelete}>Delete </button>
+        <button
+          className="btn btn-outline-dark mx-2"
+          onClick={this.handleDelete}
+        >
+          Delete{" "}
+        </button>
 
         <hr />
       </div>

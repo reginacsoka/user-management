@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { apiCalls } from "../utils/apiCalls";
+import { Form, Col, FormLabel, FormGroup, Container } from "react-bootstrap";
 
 class AddEditUser extends Component {
   state = {
@@ -59,9 +60,17 @@ class AddEditUser extends Component {
 
   getSubmitButton = () => {
     if (this.props.match.params.id) {
-      return <button onClick={this.handleUpdate}>Update</button>;
+      return (
+        <button className="btn btn-success mx-2" onClick={this.handleUpdate}>
+          Update
+        </button>
+      );
     } else {
-      return <button onClick={this.handleInsert}>Add new user</button>;
+      return (
+        <button className="btn btn-success mx-2" onClick={this.handleInsert}>
+          Add new user
+        </button>
+      );
     }
   };
 
@@ -69,49 +78,61 @@ class AddEditUser extends Component {
     const u = this.state.user;
 
     return (
-      <div>
-        <h2>Edit User {u.id || ""}</h2>
+      <Container>
+        <Col>
+          <Col xs={{ span: 4, offset: 4 }}>
+            <Form>
+              <h2>Edit User {u.id || ""}</h2>
 
-        <label name="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={u.name || ""}
-          onChange={this.handleChangeName}
-        />
-        <br />
+              <FormGroup as={Col}>
+                <FormLabel>Name:</FormLabel>
 
-        <label name="userName">Username:</label>
-        <input
-          type="text"
-          id="userName"
-          value={u.username || ""}
-          onChange={this.handleChangeUsername}
-        />
-        <br />
+                <Form.Control
+                  type="text"
+                  id="name"
+                  value={u.name || ""}
+                  onChange={this.handleChangeName}
+                />
+              </FormGroup>
 
-        <label name="email">E-mail:</label>
-        <input
-          type="email"
-          value={u.email || ""}
-          onChange={this.handleChangeEmail}
-        />
-        <br />
+              <FormGroup as={Col}>
+                <FormLabel>Username:</FormLabel>
+                <Form.Control
+                  type="text"
+                  id="userName"
+                  value={u.username || ""}
+                  onChange={this.handleChangeUsername}
+                />
+              </FormGroup>
 
-        <label name="dateOfBirth">Date of birth:</label>
-        <input
-          type="date"
-          value={u.dateOfBirth || ""}
-          onChange={this.handleChangeDate}
-        />
-        <br />
+              <FormGroup as={Col}>
+                <FormLabel name="email">E-mail:</FormLabel>
+                <Form.Control
+                  type="email"
+                  value={u.email || ""}
+                  onChange={this.handleChangeEmail}
+                />
+              </FormGroup>
+              <FormGroup as={Col}>
+                <FormLabel name="dateOfBirth">Date of birth:</FormLabel>
+                <Form.Control
+                  type="date"
+                  value={u.dateOfBirth || ""}
+                  onChange={this.handleChangeDate}
+                />
+              </FormGroup>
 
-        {this.getSubmitButton()}
+              <FormGroup as={Col} className="mt-3">
+                {this.getSubmitButton()}
 
-        <Link to="/">
-          <button> Back </button>
-        </Link>
-      </div>
+                <Link to="/">
+                  <button className="btn btn-dark mx-2"> Back </button>
+                </Link>
+              </FormGroup>
+            </Form>
+          </Col>
+        </Col>
+      </Container>
     );
   }
 }
