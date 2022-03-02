@@ -79,7 +79,7 @@ class AddEditUser extends Component {
 
     return (
       <Container>
-        <Col>
+        
           <Col xs={{ span: 4, offset: 4 }}>
             <Form>
               <h2>Edit User {u.id || ""}</h2>
@@ -130,7 +130,7 @@ class AddEditUser extends Component {
                 </Link>
               </FormGroup>
             </Form>
-          </Col>
+          
         </Col>
       </Container>
     );

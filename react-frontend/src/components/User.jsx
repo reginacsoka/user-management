@@ -13,9 +13,10 @@ class User extends Component {
     return (
       <div>
         <p> Name: {this.props.user.name}</p>
+        <p> Username: {this.props.user.username}</p> 
         <p> Email: {this.props.user.email}</p>
         <p> Date of birth: {this.props.user.dateOfBirth}</p>
-        <p> Username: {this.props.user.username}</p>
+       
 
         <Link to={"/edit/" + this.props.user.id}>
           <button className="btn btn-outline-success mx-2">Edit</button>

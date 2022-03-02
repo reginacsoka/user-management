@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class HandleRequests {
 
 	static Connection connection;
+	public static String nameTable = "users";
 
 	private static Connection getConnection() {
 		if (connection == null) {
@@ -54,17 +55,18 @@ public class HandleRequests {
 
 	public static List<User> getAllUsers() {
 		try {
-			PreparedStatement pst = getConnection().prepareStatement("SELECT * FROM test_table");
+			PreparedStatement pst = getConnection().prepareStatement("SELECT * FROM " + nameTable);
 			ResultSet rs = pst.executeQuery();
 
 			List<User> users = new ArrayList<User>();
 
 			while(rs.next()){
-				int id  = rs.getInt(5);
+				
+				int id  = rs.getInt(1);
 				String name = rs.getString(2);
-				Date dateOfBirth  = rs.getDate(1);
-				String email = rs.getString(3);
-				String username = rs.getString(4);
+				Date dateOfBirth  = rs.getDate(5);
+				String email = rs.getString(4);
+				String username = rs.getString(3);
 
 				users.add(new User(id,name,dateOfBirth,email,username));
 			}
@@ -79,7 +81,7 @@ public class HandleRequests {
 
 	public static void deleteUser(int id) {
 		try {
-			PreparedStatement pst = getConnection().prepareStatement("DELETE FROM test_table WHERE id = ?");
+			PreparedStatement pst = getConnection().prepareStatement("DELETE FROM "+ nameTable +" WHERE id = ?");
 
 			pst.setLong(1, id);
 			pst.execute();
@@ -91,7 +93,7 @@ public class HandleRequests {
 
 	public static User getUser(int userId) {
 		try {
-			PreparedStatement pst = getConnection().prepareStatement("SELECT * FROM test_table WHERE id = ?");
+			PreparedStatement pst = getConnection().prepareStatement("SELECT * FROM "+ nameTable +" WHERE id = ?");
 			pst.setInt(1, userId);
 			pst.execute();
 			
@@ -99,11 +101,11 @@ public class HandleRequests {
 
 			User u = null;
 			while(rs.next()){
-				int id  = rs.getInt(5);
+				int id  = rs.getInt(1);
 				String name = rs.getString(2);
-				Date dateOfBirth  = rs.getDate(1);
-				String email = rs.getString(3);
-				String username = rs.getString(4);
+				Date dateOfBirth  = rs.getDate(5);
+				String email = rs.getString(4);
+				String username = rs.getString(3);
 				
 				u = new User(id,name,dateOfBirth,email,username);
 				
@@ -118,7 +120,7 @@ public class HandleRequests {
 
 	public static User insertUser(User user) {
 		try {
-			PreparedStatement pst = getConnection().prepareStatement("INSERT INTO public.test_table(date_of_birth, name, email, username) VALUES (?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pst = getConnection().prepareStatement("INSERT INTO public."+ nameTable +"(date_of_birth, name, email, username) VALUES (?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 			pst.setDate(1, user.getDateOfBirth());
 			pst.setString(2, user.getName());
 			pst.setString(3, user.getEmail());
@@ -128,7 +130,7 @@ public class HandleRequests {
 			ResultSet rs = pst.getGeneratedKeys();
 
 			if (rs.next()) {
-				user.setId(rs.getInt(5));
+				user.setId(rs.getInt(1));
 			}
 
 			return user;
@@ -141,7 +143,7 @@ public class HandleRequests {
 
 	public static User updateUser(int userId, User user) {
 		try {
-			PreparedStatement pst = getConnection().prepareStatement("UPDATE test_table SET date_of_birth=?, name=?, email=?, username=? WHERE id=?",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pst = getConnection().prepareStatement("UPDATE "+ nameTable +" SET date_of_birth=?, name=?, email=?, username=? WHERE id=?",Statement.RETURN_GENERATED_KEYS);
 			pst.setDate(1, user.getDateOfBirth());
 			pst.setString(2, user.getName());
 			pst.setString(3, user.getEmail());
